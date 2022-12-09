@@ -55,6 +55,7 @@ def signUp(request):
         print(e)
         return JsonResponse({'signup':False})
 
+@api_view(["POST"])
 def signOut(request):
     try:
         logout(request)

@@ -1,11 +1,8 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
 import axios from 'axios'
 import { useEffect } from 'react'
 import {HashRouter as Router, Routes, Route} from "react-router-dom";
-import SignUp from "./pages/SignUp";
-import SignIn from './pages/SignIn'
 import AppNav from './components/AppNav'
 import LogIn from './pages/LogIn'
 import SignUp2 from './pages/SignUp2'
@@ -65,9 +62,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LogIn />} />
-          <Route path="/signUp" element={<SignUp />} />
           <Route path="/signUp2" element={<SignUp2 />} />
-          <Route path="/signIn" element={<SignIn />} />
           <Route path="/SimStart" element={<SimStart user = {user}/>} />
         </Routes>
       </Router>
