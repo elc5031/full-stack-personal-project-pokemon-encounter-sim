@@ -66,7 +66,7 @@ function App() {
 
   useEffect(()=>{
     curr_user()
-    firstPoke()
+    // firstPoke()
   },[])
 
   
