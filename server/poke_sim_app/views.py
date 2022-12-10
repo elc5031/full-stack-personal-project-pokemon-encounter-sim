@@ -63,3 +63,28 @@ def signOut(request):
     except Exception as e:
         print(e)
         return JsonResponse({'signout':False})
+
+@api_view(["POST"])
+def addPoke(request):
+    name = request.data['name']
+    poke_id = request.data['poke_id']
+    img_link = request.data['img_link']
+    try:
+        if OwnedPoke.objects.filter(name=name).exists():
+            return JsonResponse({'addpoke':'poke already added'})
+        else:
+            new_poke = OwnedPoke(name=name, poke_id=poke_id, img_link=img_link)
+            new_poke.save()
+            return JsonResponse({'addpoke':True})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'addpoke':False})
+
+@api_view(["GET"])
+def getPokes(request):
+    all_pokes = OwnedPoke.objects.all()
+    all_pokes_values = all_pokes.values()
+    list_all_pokes_values = [entry for entry in all_pokes_values]
+    return JsonResponse({'data': list_all_pokes_values})
+
+    

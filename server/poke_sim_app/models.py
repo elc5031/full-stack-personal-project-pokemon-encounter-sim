@@ -23,3 +23,4 @@ class AppUser(AbstractUser):
 class OwnedPoke(models.Model):
     name = models.CharField(max_length = 255)
     poke_id = models.IntegerField()
+    img_link = models.CharField(max_length = 255, null=True)

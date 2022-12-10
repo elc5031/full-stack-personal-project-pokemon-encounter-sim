@@ -26,7 +26,7 @@ function LogIn() {
         })
         console.log(myResponse.data)
         if (myResponse.data["signIn"]==true){
-          window.location.href="#/SimStart"
+          window.location.href="#/MyPokemon"
         }
         else{
             alert("incorrect input")
