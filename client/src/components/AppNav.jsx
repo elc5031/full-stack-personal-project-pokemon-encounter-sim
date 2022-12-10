@@ -64,7 +64,7 @@ const AppNav = ({user}) => {
                 <span style={{color: '#db7b14'}}>{user.email}</span> 
             </div> */}
           
-            <button class="btn btn-outline-success my-2 my-sm-0" onClick={signOut}>
+            <button class="btn btn-outline-success my-2 my-sm-0" className="ms-auto" onClick={signOut}>
               Sign Out
             </button>
           
