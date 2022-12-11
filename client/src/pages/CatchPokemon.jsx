@@ -5,7 +5,13 @@ import axios from 'axios'
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import '../App.css'
+
 import MyPokeCard from '../components/MyPokeCard';
+import MyPokeNamePlate from '../components/MyPokeNamePlate';
+import EnemyPokeNamePlate from '../components/EnemyPokeNamePlate';
+import EnemyPokeCard from '../components/EnemyPokeCard';
 
 function CatchPokemon({user}) {
   const [myPokemonHP, setMyPokemonHP] = useState(100)
@@ -17,6 +23,7 @@ function CatchPokemon({user}) {
     
   }
 
+  
   return (
     <>
     <AppNav user = {user}/>
@@ -30,31 +37,11 @@ function CatchPokemon({user}) {
       <Row xs={1} md={2} className="g-4">
         
           <Col >
-          <Card id = 'topleft'>
-              <Card.Img variant="top" src="holder.js/100px160" />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <EnemyPokeNamePlate />
           </Col>
 
           <Col>
-            <Card id = 'topright'>
-              <Card.Img variant="top" src="holder.js/100px160" />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <EnemyPokeCard />
           </Col>
 
           <Col>
@@ -62,20 +49,23 @@ function CatchPokemon({user}) {
           </Col>
 
           <Col>
-            <Card id = 'bottomright'>
-              <Card.Img variant="top" src="holder.js/100px160" />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <MyPokeNamePlate />
           </Col>
         
       </Row>
+
+      <Button variant="dark" size="lg" >
+          Fight
+      </Button>
+      <Button variant="success" size="lg">
+          Heal 
+      </Button>
+      <Button variant="primary" size="lg">
+          Catch
+      </Button>
+      <Button variant="danger" size="lg">
+          Run
+      </Button>
   
     </>
   )
