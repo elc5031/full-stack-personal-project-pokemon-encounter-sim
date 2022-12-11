@@ -23,6 +23,18 @@ function CatchPokemon({user}) {
     
   }
 
+  // when run button is clicked, 50/50 chance of escaping or not
+  const run = () => {
+    let roll = Math.round(Math.random())
+    if (roll === 0) {
+      alert ('You have failed to escape!')
+    }
+    else {
+      alert ('You have escaped successfully!')
+      window.location.href="#/MyPokemon"
+    }    
+  }
+
   
   return (
     <>
@@ -63,7 +75,7 @@ function CatchPokemon({user}) {
       <Button variant="primary" size="lg">
           Catch
       </Button>
-      <Button variant="danger" size="lg">
+      <Button variant="danger" size="lg" onClick={run}>
           Run
       </Button>
   
