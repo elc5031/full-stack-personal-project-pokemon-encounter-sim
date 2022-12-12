@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+
 import '../App.css'
 
 import MyPokeCard from '../components/MyPokeCard';
@@ -43,8 +44,8 @@ function CatchPokemon({user}) {
 
   // enemy poke attack
 
-  const enemyAttack = () => {
-    let playerHP = myPokemonHP
+  const enemyAttack = (playerHP) => {
+    // let playerHP = myPokemonHP
     let enemyDam = randIntIntervals(5, 20)    
     playerHP -= enemyDam
     setMyPokemonHP(playerHP)
@@ -52,15 +53,50 @@ function CatchPokemon({user}) {
 
   }
 
+  // timeout 
+  function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+  }
+
   // my poke attack
 
-  const myAttack = () => {
+  const myAttack = async () => {
+    let playerHP = myPokemonHP
     let enemyHP = enemyPokemonHP
     let myDam = randIntIntervals(5, 20)
     enemyHP -= myDam
     setEnemyPokemonHP(enemyHP)
     alert('PIKACHU attacked for ' + myDam + ' damage')
-    enemyAttack()
+    await timeout(1000)
+    enemyAttack(playerHP)
+
+  }
+  
+
+  // my heals
+
+  const myHeal = async () => {
+    let playerHP = myPokemonHP
+    if (potionCount > 0 && playerHP <= 80) {
+      playerHP += 20
+      setMyPokemonHP(playerHP)
+      setPotionCount(potionCount - 1)
+      alert('PIKACHU healed for 20 HP')
+      await timeout(1000)
+      enemyAttack(playerHP)
+    }
+    else if (potionCount === 0){
+      alert('PIKACHU tried to heal, but you have no more potions!')
+      enemyAttack()
+    }
+    else {
+      playerHP = 100
+      setMyPokemonHP(playerHP)
+      setPotionCount(potionCount - 1)
+      alert('PIKACHU healed for 20 HP')
+      await timeout(1000)
+      enemyAttack(playerHP)
+    }
 
   }
 
@@ -98,8 +134,8 @@ function CatchPokemon({user}) {
       <Button variant="dark" size="lg" onClick={myAttack}>
           Fight
       </Button>
-      <Button variant="success" size="lg">
-          Heal 
+      <Button variant="success" size="lg" onClick={myHeal}>
+          Potion ({potionCount}) 
       </Button>
       <Button variant="primary" size="lg">
           Catch
