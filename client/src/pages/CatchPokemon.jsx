@@ -35,6 +35,35 @@ function CatchPokemon({user}) {
     }    
   }
 
+  // random int with intervals
+  function randIntIntervals (min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+
+  // enemy poke attack
+
+  const enemyAttack = () => {
+    let playerHP = myPokemonHP
+    let enemyDam = randIntIntervals(5, 20)    
+    playerHP -= enemyDam
+    setMyPokemonHP(playerHP)
+    alert('Enemy attacked for ' + enemyDam + ' damage')
+
+  }
+
+  // my poke attack
+
+  const myAttack = () => {
+    let enemyHP = enemyPokemonHP
+    let myDam = randIntIntervals(5, 20)
+    enemyHP -= myDam
+    setEnemyPokemonHP(enemyHP)
+    alert('PIKACHU attacked for ' + myDam + ' damage')
+    enemyAttack()
+
+  }
+
   
   return (
     <>
@@ -49,7 +78,7 @@ function CatchPokemon({user}) {
       <Row xs={1} md={2} className="g-4">
         
           <Col >
-            <EnemyPokeNamePlate />
+            <EnemyPokeNamePlate enemyPokemonHP = {enemyPokemonHP}/>
           </Col>
 
           <Col>
@@ -61,12 +90,12 @@ function CatchPokemon({user}) {
           </Col>
 
           <Col>
-            <MyPokeNamePlate />
+            <MyPokeNamePlate myPokemonHP = {myPokemonHP} />
           </Col>
         
       </Row>
 
-      <Button variant="dark" size="lg" >
+      <Button variant="dark" size="lg" onClick={myAttack}>
           Fight
       </Button>
       <Button variant="success" size="lg">
