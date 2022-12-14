@@ -15,10 +15,11 @@ import EnemyPokeNamePlate from '../components/EnemyPokeNamePlate';
 import EnemyPokeCard from '../components/EnemyPokeCard';
 
 function CatchPokemon({user}) {
-  const [myPokemonHP, setMyPokemonHP] = useState(100)
-  const [enemyPokemonHP, setEnemyPokemonHP] = useState(100)
+  const [myPokemonHP, setMyPokemonHP] = useState(25)
+  const [enemyPokemonHP, setEnemyPokemonHP] = useState(5)
   const [potionCount, setPotionCount] = useState(3)
   const [enemyExists, setEnemyExists] = useState(false)
+  const [catchCountdown, setCatchCountdown] = useState(null)
 
   const getEnemy = () => {
     
@@ -68,7 +69,10 @@ function CatchPokemon({user}) {
     setEnemyPokemonHP(enemyHP)
     alert('PIKACHU attacked for ' + myDam + ' damage')
     await timeout(1000)
-    enemyAttack(playerHP)
+    if (enemyHP > 0){
+      enemyAttack(playerHP)
+    }
+    
 
   }
   
@@ -100,14 +104,78 @@ function CatchPokemon({user}) {
 
   }
 
+  // attempt to catch
+
+  const catchPoke = async () => {
+    let enemyHP = enemyPokemonHP
+    let playerHP = myPokemonHP
+    if (enemyHP <= 15) {
+      setCatchCountdown(5)
+      await timeout(1000)
+      setCatchCountdown(4)
+      await timeout(1000)
+      setCatchCountdown(3)
+      await timeout(1000)
+      setCatchCountdown(2)
+      await timeout(1000)
+      setCatchCountdown(1)
+      await timeout(1000)
+      setCatchCountdown(0)
+      await timeout(1000)
+      alert('ENEMY was captured successfully!')
+      window.location.href="#/MyPokemon"
+    }
+    else {
+      setCatchCountdown(5)
+      await timeout(1000)
+      setCatchCountdown(4)
+      await timeout(1000)
+      setCatchCountdown(3)
+      await timeout(1000)
+      setCatchCountdown(2)
+      await timeout(1000)
+      setCatchCountdown(1)
+      await timeout(1000)
+      setCatchCountdown(0)
+      await timeout(1000)
+      alert('ENEMY broke free!')
+      enemyAttack(playerHP)
+    }
+  }
+
+  // handle knocking out enemy poke
+
+  const checkIfPokesDead = async () => {
+    let playerHP = myPokemonHP
+    let enemyHP = enemyPokemonHP
+    if (playerHP <= 0) {
+      setMyPokemonHP(0)
+      await timeout(1000)
+      alert('Your PIKACHU has fainted! You run away!')
+      window.location.href="#/MyPokemon"
+    }
+    else if (enemyHP <= 0) {
+      setEnemyPokemonHP(0)
+      await timeout(1000)
+      alert('ENEMY has fainted! You have defeated ENEMY!')
+      window.location.href="#/MyPokemon"
+    }
+  }
+
+  useEffect (() => {
+    checkIfPokesDead()
+  }, [myPokemonHP, enemyPokemonHP])
   
   return (
     <>
     <AppNav user = {user}/>
     <br/>
     {!enemyExists && <button variant="primary" size = "lg" onClick = {getEnemy()}>Click here to find a Pokemon to catch!</button>}
-    
-    <div>Catching Pokemon</div>
+    <br/>
+    <br/>
+    {catchCountdown && <h2>Attempting to catch ENEMY: {catchCountdown}</h2>}
+    <br/>
+   
     
 
 
@@ -137,7 +205,7 @@ function CatchPokemon({user}) {
       <Button variant="success" size="lg" onClick={myHeal}>
           Potion ({potionCount}) 
       </Button>
-      <Button variant="primary" size="lg">
+      <Button variant="primary" size="lg" onClick={catchPoke}>
           Catch
       </Button>
       <Button variant="danger" size="lg" onClick={run}>
