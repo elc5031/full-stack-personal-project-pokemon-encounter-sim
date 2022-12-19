@@ -8,7 +8,7 @@ function PokemonArt({name, img_link}) {
   return (
     <div>             
 
-    <Card style={{ width: '18rem' }}>
+    <Card className='flex-fill' style={{ width: '18rem' }}>
       <Card.Img variant="top" src={img_link}  />
       <Card.Body>
         <Card.Title>{pokeNameUpper}</Card.Title>        

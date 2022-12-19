@@ -2,7 +2,11 @@ import React from 'react'
 import axios from 'axios'
 import AppNav from '../components/AppNav';
 import {useState, useEffect} from 'react'
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import PokemonArt from '../components/PokemonArt';
+
 
 
 function MyPokemon({user, myPokemon}) {
@@ -24,13 +28,24 @@ function MyPokemon({user, myPokemon}) {
     <AppNav user = {user}/>
     <h1>My Pokemon</h1>
     <h5>Go catch some pokemon to get more!</h5>
-    <p><span style = {{color:'red'}}>WARNING:</span> releasing your Pokemon will set them free to the wild and you will no long have them.</p>
-    <div>
-      {allPokemon.map((pokemon) => (
-          <PokemonArt key={pokemon.id} {...pokemon}/>
-          ))
-      }
-    </div>
+    <p><span style = {{color:'red'}}>WARNING:</span> releasing your Pokemon will set them free to the wild and you will no long have them.</p>    
+    
+      <Row lg={3}>
+        
+          
+          {allPokemon.map((pokemon) => {
+              return (
+                <Col className='d-flex'>
+                <PokemonArt key={pokemon.id} {...pokemon}/>
+                </Col>
+              )
+                            
+          })
+          }
+           
+       
+      </Row>   
+    
     </div>
   )
 }

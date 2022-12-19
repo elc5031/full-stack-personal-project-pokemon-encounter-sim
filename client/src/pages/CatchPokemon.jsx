@@ -21,8 +21,13 @@ function CatchPokemon({user}) {
   const [enemyExists, setEnemyExists] = useState(false)
   const [catchCountdown, setCatchCountdown] = useState(null)
 
-  const getEnemy = () => {
-    
+  // for starting button to grab an enemy
+  const getEnemy = async () => {
+    let pickID = Math.floor(Math.random() * 900) + 1
+    let enemyInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pickID}`)
+    enemyInfo = enemyInfo.data
+    console.log(enemyInfo)
+    setEnemyExists(enemyInfo)
   }
 
   // when run button is clicked, 50/50 chance of escaping or not
@@ -103,6 +108,26 @@ function CatchPokemon({user}) {
     }
 
   }
+  // add enemy to db if caught
+
+  const addPokeDB = async() => {
+    let pokeInfo = enemyExists
+
+    let myResponse = await axios.post('addPoke/', {
+      'name': pokeInfo.name,
+      'poke_id': pokeInfo.id,
+      'img_link': pokeInfo.sprites.other['official-artwork'].front_default
+    })
+    if(myResponse.data['addpoke']==true){
+      console.log('poke added to db')
+    }
+    else if(myResponse.data['addpoke']=='poke already added'){
+      console.log('poke already exists')
+    }
+    else{
+      alert('failed to add poke')
+    }
+  }
 
   // attempt to catch
 
@@ -110,6 +135,7 @@ function CatchPokemon({user}) {
     let enemyHP = enemyPokemonHP
     let playerHP = myPokemonHP
     if (enemyHP <= 15) {
+      addPokeDB()
       setCatchCountdown(5)
       await timeout(1000)
       setCatchCountdown(4)
@@ -120,7 +146,7 @@ function CatchPokemon({user}) {
       await timeout(1000)
       setCatchCountdown(1)
       await timeout(1000)
-      setCatchCountdown(0)
+      setCatchCountdown('0')
       await timeout(1000)
       alert('ENEMY was captured successfully!')
       window.location.href="#/MyPokemon"
@@ -136,7 +162,7 @@ function CatchPokemon({user}) {
       await timeout(1000)
       setCatchCountdown(1)
       await timeout(1000)
-      setCatchCountdown(0)
+      setCatchCountdown('0')
       await timeout(1000)
       alert('ENEMY broke free!')
       enemyAttack(playerHP)
@@ -170,7 +196,7 @@ function CatchPokemon({user}) {
     <>
     <AppNav user = {user}/>
     <br/>
-    {!enemyExists && <button variant="primary" size = "lg" onClick = {getEnemy()}>Click here to find a Pokemon to catch!</button>}
+    {!enemyExists && <button variant="primary" size = "lg" onClick = {getEnemy}>Click here to find a Pokemon to catch!</button>}
     <br/>
     <br/>
     {catchCountdown && <h2>Attempting to catch ENEMY: {catchCountdown}</h2>}
@@ -182,11 +208,11 @@ function CatchPokemon({user}) {
       <Row xs={1} md={2} className="g-4">
         
           <Col >
-            <EnemyPokeNamePlate enemyPokemonHP = {enemyPokemonHP}/>
+            {enemyExists && <EnemyPokeNamePlate enemyPokemonHP = {enemyPokemonHP} enemyInfo = {enemyExists}/>}
           </Col>
 
           <Col>
-            <EnemyPokeCard />
+            {enemyExists && <EnemyPokeCard enemyInfo = {enemyExists}/>}
           </Col>
 
           <Col>

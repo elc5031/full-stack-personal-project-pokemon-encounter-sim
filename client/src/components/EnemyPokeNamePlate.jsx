@@ -1,10 +1,10 @@
 import React from 'react'
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-function EnemyPokeNamePlate({enemyPokemonHP}) {
+function EnemyPokeNamePlate({enemyPokemonHP, enemyInfo}) {
   return (
     <div align = "center" >
-        <h3>ENEMY</h3>
+        <h3>{enemyInfo.name.toUpperCase()}</h3>
         <ProgressBar now = {enemyPokemonHP} style = {{background: 'black', width: '50%', align: 'center'}} />
         <h3>HP:  {enemyPokemonHP} / 100</h3>
         {/* <Card id = 'bottomright'>
