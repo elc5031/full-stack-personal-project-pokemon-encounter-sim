@@ -1,14 +1,26 @@
 import React from 'react'
+import axios from 'axios'
+import {useEffect, useState} from 'react'
 
-function EnemyPokeCard({enemyInfo}) {
+function EnemyPokeCard({enemyInfo, isCatching}) {
+  const [pokeballImg, setPokeballImg] = useState(null)
+
+  // grab pokeball link from backend api call to 3rd party api call
+  const getPokeballImg = async () => {
+    let myResponse = await axios.get('getPokeball/')
+    let pokeball = myResponse.data.data['image_url']
+    setPokeballImg(pokeball)
+  }
+
+  useEffect(() => {
+    getPokeballImg()
+  }, [])
+
   return (
     <div>
-        <img width ='50%' height='50%' src = {enemyInfo.sprites["front_default"]}/>
-        {/* <Card id = 'bottomleft' style = {{height:300, width:300}} className="border-0">
-            <Card.Img variant="top"  width ='100%' height='100%' src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png" />            
-            
-        </Card> */}
-
+      {!isCatching && <img width ='50%' height='50%' src = {enemyInfo.sprites["front_default"]}/>}
+      {isCatching && <img width ='50%' height='50%' src = {pokeballImg}/>}
+        
     </div>
   )
 }

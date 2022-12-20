@@ -15,8 +15,8 @@ import EnemyPokeNamePlate from '../components/EnemyPokeNamePlate';
 import EnemyPokeCard from '../components/EnemyPokeCard';
 
 function CatchPokemon({user}) {
-  const [myPokemonHP, setMyPokemonHP] = useState(25)
-  const [enemyPokemonHP, setEnemyPokemonHP] = useState(5)
+  const [myPokemonHP, setMyPokemonHP] = useState(100)
+  const [enemyPokemonHP, setEnemyPokemonHP] = useState(15)
   const [potionCount, setPotionCount] = useState(3)
   const [enemyExists, setEnemyExists] = useState(false)
   const [catchCountdown, setCatchCountdown] = useState(null)
@@ -164,6 +164,8 @@ function CatchPokemon({user}) {
       await timeout(1000)
       setCatchCountdown('0')
       await timeout(1000)
+      setCatchCountdown(null)
+      await timeout(1000)
       alert('ENEMY broke free!')
       enemyAttack(playerHP)
     }
@@ -212,7 +214,7 @@ function CatchPokemon({user}) {
           </Col>
 
           <Col>
-            {enemyExists && <EnemyPokeCard enemyInfo = {enemyExists}/>}
+            {enemyExists && <EnemyPokeCard enemyInfo = {enemyExists} isCatching = {catchCountdown}/>}
           </Col>
 
           <Col>
