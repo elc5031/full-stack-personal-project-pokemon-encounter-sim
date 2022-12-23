@@ -113,4 +113,14 @@ def getPokeball(request):
     }
 
     return JsonResponse({'data': data})
-    
+
+# release a poke from db
+@api_view(["DELETE"])
+def releasePoke(request, poke_id):
+    poke_to_release = OwnedPoke.objects.get(poke_id = poke_id)
+    try:
+        poke_to_release.delete()
+        return JsonResponse({'releasepoke':True})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'releasepoke':False})

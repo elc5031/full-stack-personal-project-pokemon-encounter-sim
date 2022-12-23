@@ -16,7 +16,7 @@ import EnemyPokeCard from '../components/EnemyPokeCard';
 
 function CatchPokemon({user}) {
   const [myPokemonHP, setMyPokemonHP] = useState(100)
-  const [enemyPokemonHP, setEnemyPokemonHP] = useState(15)
+  const [enemyPokemonHP, setEnemyPokemonHP] = useState(100)
   const [potionCount, setPotionCount] = useState(3)
   const [enemyExists, setEnemyExists] = useState(false)
   const [catchCountdown, setCatchCountdown] = useState(null)
@@ -25,21 +25,8 @@ function CatchPokemon({user}) {
   const getEnemy = async () => {
     let pickID = Math.floor(Math.random() * 900) + 1
     let enemyInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pickID}`)
-    enemyInfo = enemyInfo.data
-    console.log(enemyInfo)
+    enemyInfo = enemyInfo.data    
     setEnemyExists(enemyInfo)
-  }
-
-  // when run button is clicked, 50/50 chance of escaping or not
-  const run = () => {
-    let roll = Math.round(Math.random())
-    if (roll === 0) {
-      alert ('You have failed to escape!')
-    }
-    else {
-      alert ('You have escaped successfully!')
-      window.location.href="#/MyPokemon"
-    }    
   }
 
   // random int with intervals
@@ -55,8 +42,23 @@ function CatchPokemon({user}) {
     let enemyDam = randIntIntervals(5, 20)    
     playerHP -= enemyDam
     setMyPokemonHP(playerHP)
-    alert('Enemy attacked for ' + enemyDam + ' damage')
+    alert(`${enemyExists.name.toUpperCase()} attacked for ${enemyDam} damage`)
 
+  }
+
+  // when run button is clicked, 50/50 chance of escaping or not
+  const run = async () => {
+    let roll = Math.round(Math.random())
+    let playerHP = myPokemonHP
+    if (roll === 0) {
+      alert ('You have failed to escape!')
+      await timeout(1000)
+      enemyAttack(playerHP)
+    }
+    else {
+      alert ('You have escaped successfully!')
+      window.location.href="#/MyPokemon"
+    }    
   }
 
   // timeout 
@@ -148,7 +150,7 @@ function CatchPokemon({user}) {
       await timeout(1000)
       setCatchCountdown('0')
       await timeout(1000)
-      alert('ENEMY was captured successfully!')
+      alert(`${enemyExists.name.toUpperCase()} was captured successfully!`)
       window.location.href="#/MyPokemon"
     }
     else {
@@ -166,7 +168,7 @@ function CatchPokemon({user}) {
       await timeout(1000)
       setCatchCountdown(null)
       await timeout(1000)
-      alert('ENEMY broke free!')
+      alert(`${enemyExists.name.toUpperCase()} broke free!`)
       enemyAttack(playerHP)
     }
   }
@@ -185,7 +187,7 @@ function CatchPokemon({user}) {
     else if (enemyHP <= 0) {
       setEnemyPokemonHP(0)
       await timeout(1000)
-      alert('ENEMY has fainted! You have defeated ENEMY!')
+      alert(`${enemyExists.name.toUpperCase()} has fainted! You have defeated ${enemyExists.name.toUpperCase()}!`)
       window.location.href="#/MyPokemon"
     }
   }
@@ -201,7 +203,7 @@ function CatchPokemon({user}) {
     {!enemyExists && <button variant="primary" size = "lg" onClick = {getEnemy}>Click here to find a Pokemon to catch!</button>}
     <br/>
     <br/>
-    {catchCountdown && <h2>Attempting to catch ENEMY: {catchCountdown}</h2>}
+    {catchCountdown && <h2>Attempting to catch {enemyExists.name.toUpperCase()}: {catchCountdown}</h2>}
     <br/>
    
     
@@ -226,20 +228,19 @@ function CatchPokemon({user}) {
           </Col>
         
       </Row>
-
-      <Button variant="dark" size="lg" onClick={myAttack}>
+      {enemyExists && <Button variant="dark" size="lg" onClick={myAttack}>
           Fight
-      </Button>
-      <Button variant="success" size="lg" onClick={myHeal}>
+      </Button>} 
+      {enemyExists && <Button variant="success" size="lg" onClick={myHeal}>
           Potion ({potionCount}) 
-      </Button>
-      <Button variant="primary" size="lg" onClick={catchPoke}>
+      </Button> }
+      {enemyExists && <Button variant="primary" size="lg" onClick={catchPoke}>
           Catch
-      </Button>
-      <Button variant="danger" size="lg" onClick={run}>
+      </Button>} 
+      {enemyExists && <Button variant="danger" size="lg" onClick={run}>
           Run
       </Button>
-  
+      }
     </>
   )
 }

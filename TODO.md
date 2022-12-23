@@ -1,3 +1,3 @@
 make requirements
 reenable first poke so users get a pika
-release pokes
+make instructions for api env for 0auth1 in readme

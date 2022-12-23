@@ -9,5 +9,6 @@ urlpatterns = [
     path('current_user', views.curr_user),
     path('addPoke/', views.addPoke),
     path('getPokes/', views.getPokes),
-    path('getPokeball/', views.getPokeball)
+    path('getPokeball/', views.getPokeball),
+    path('releasePoke/<int:poke_id>/', views.releasePoke),
 ]

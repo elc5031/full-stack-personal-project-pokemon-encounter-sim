@@ -29,7 +29,8 @@ function MyPokemon({user, myPokemon}) {
     <h1>My Pokemon</h1>
     <h5>Go catch some pokemon to get more!</h5>
     <p><span style = {{color:'red'}}>WARNING:</span> releasing your Pokemon will set them free to the wild and you will no long have them.</p>    
-    
+    <p>NOTE: You cannot get rid of your best friend, Pikachu.</p>
+
       <Row lg={3}>
         
           
