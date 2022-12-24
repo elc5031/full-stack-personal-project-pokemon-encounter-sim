@@ -27,6 +27,8 @@ function CatchPokemon({user}) {
     let enemyInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pickID}`)
     enemyInfo = enemyInfo.data    
     setEnemyExists(enemyInfo)
+    await timeout(1000)
+    alert(`A wild ${enemyInfo.name.toUpperCase()} has appeared!`)
   }
 
   // random int with intervals
@@ -98,7 +100,7 @@ function CatchPokemon({user}) {
     }
     else if (potionCount === 0){
       alert('PIKACHU tried to heal, but you have no more potions!')
-      enemyAttack()
+      enemyAttack(playerHP)
     }
     else {
       playerHP = 100

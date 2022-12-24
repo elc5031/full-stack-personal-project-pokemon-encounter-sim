@@ -43,10 +43,10 @@ function App() {
   const firstPoke = async() => {
     let currentPokes = myPokemon
     const pikachuInfo = await axios.get('https://pokeapi.co/api/v2/pokemon/pikachu')
-    console.log(myPokemon)
+    
     currentPokes.push(pikachuInfo)
     setMyPokemon(currentPokes)
-    console.log(myPokemon)
+    
 
     let myResponse = await axios.post('addPoke/', {
       'name': pikachuInfo.data.name,
@@ -66,7 +66,7 @@ function App() {
 
   useEffect(()=>{
     curr_user()
-    // firstPoke()
+    firstPoke()
   },[])
 
   

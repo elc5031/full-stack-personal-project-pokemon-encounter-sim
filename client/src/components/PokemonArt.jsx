@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import {useEffect, useState} from 'react';
 
-function PokemonArt({name, img_link, poke_id}) {
+function PokemonArt({name, img_link, poke_id, setPokeDeleted}) {
     let pokeNameUpper = name.toUpperCase()
     const [isPikachu, setIsPikachu] = useState(false)
 
@@ -19,12 +19,17 @@ function PokemonArt({name, img_link, poke_id}) {
 
     // release poke button function
 
-    const releasePoke = () => {
+    const releasePoke =  async () => {
       axios.delete(`releasePoke/${poke_id}/`)
       .then(response => {
         console.log(response.data)
-        window.location.reload(true)
+        // window.location.reload(true)
+        setPokeDeleted(true)
+        
       })
+      
+      setPokeDeleted(false)
+      
     }
 
   return (

@@ -11,6 +11,7 @@ import PokemonArt from '../components/PokemonArt';
 
 function MyPokemon({user, myPokemon}) {
   const [allPokemon, setAllPokemon] = useState([])
+  const [pokeDeleted, setPokeDeleted] = useState(false)
 
   // get all poke from db
   const showMyPokemon = async() => {
@@ -21,7 +22,7 @@ function MyPokemon({user, myPokemon}) {
   
   useEffect(() => {
     showMyPokemon()
-  }, [])
+  }, [pokeDeleted])
 
   return (
     <div>
@@ -37,7 +38,7 @@ function MyPokemon({user, myPokemon}) {
           {allPokemon.map((pokemon) => {
               return (
                 <Col className='d-flex'>
-                <PokemonArt key={pokemon.id} {...pokemon}/>
+                <PokemonArt key={pokemon.id} {...pokemon} setPokeDeleted = {setPokeDeleted}/>
                 </Col>
               )
                             

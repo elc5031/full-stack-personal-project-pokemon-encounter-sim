@@ -24,6 +24,8 @@ const AppNav = ({user}) => {
     let myResponse=await axios.post('signOut/')
     if (myResponse.data["signout"]==true){
       window.location.href="/"
+      await timeout(1000)
+      window.location.reload()
     }
   }
 
@@ -60,7 +62,7 @@ const AppNav = ({user}) => {
             
             
           </ul>
-            {/* <div>
+            {/* <div className='ms-auto'>
                 <span style={{color: '#db7b14'}}>{user.email}</span> 
             </div> */}
           
