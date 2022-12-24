@@ -14,6 +14,8 @@ This project utilized the public pokemon api https://pokeapi.co/ to obtain gener
 Note to users, you will need an api key and secretkey from https://api.thenounproject.com/getting_started.html#creating-an-api-key and store it in a .env file in the same level as manage.py. This will enable api calls to grab the image of a pokeball to catch pokemon and fulfills assignment requirements for a third party API call.
 
 The formatting of your .env file will look like this:
+
 apikey=*****************
+
 secretkey=*******************
 
