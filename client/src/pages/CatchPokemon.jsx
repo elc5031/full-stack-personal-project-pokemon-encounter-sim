@@ -27,9 +27,7 @@ function CatchPokemon({user}) {
     let pickID = Math.floor(Math.random() * 900) + 1
     let enemyInfo = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pickID}`)
     enemyInfo = enemyInfo.data    
-    setEnemyExists(enemyInfo)
-    // await timeout(1000)
-    // alert(`A wild ${enemyInfo.name.toUpperCase()} has appeared!`)
+    setEnemyExists(enemyInfo)    
     setCombatText(`A wild ${enemyInfo.name.toUpperCase()} has appeared!`)
     await timeout(2000)
     setCombatText(' ')
@@ -47,8 +45,7 @@ function CatchPokemon({user}) {
     // let playerHP = myPokemonHP
     let enemyDam = randIntIntervals(5, 20)    
     playerHP -= enemyDam
-    setMyPokemonHP(playerHP)
-    // alert(`${enemyExists.name.toUpperCase()} attacked for ${enemyDam} damage`)
+    setMyPokemonHP(playerHP)    
     setCombatText(`${enemyExists.name.toUpperCase()} attacked for ${enemyDam} damage`)
     await timeout(2000)
     setCombatText(' ')
@@ -82,8 +79,7 @@ function CatchPokemon({user}) {
     let enemyHP = enemyPokemonHP
     let myDam = randIntIntervals(5, 20)
     enemyHP -= myDam
-    setEnemyPokemonHP(enemyHP)
-    // alert('PIKACHU attacked for ' + myDam + ' damage')
+    setEnemyPokemonHP(enemyHP)    
     setCombatText('PIKACHU attacked for ' + myDam + ' damage')
     await timeout(2000)
     setCombatText(' ')
@@ -104,8 +100,7 @@ function CatchPokemon({user}) {
     if (potionCount > 0 && playerHP <= 80) {
       playerHP += 20
       setMyPokemonHP(playerHP)
-      setPotionCount(potionCount - 1)
-      // alert('PIKACHU healed for 20 HP')
+      setPotionCount(potionCount - 1)      
       setCombatText('PIKACHU healed for 20 HP')
       await timeout(2000)
       setCombatText(' ')
@@ -119,8 +114,7 @@ function CatchPokemon({user}) {
     else {
       playerHP = 100
       setMyPokemonHP(playerHP)
-      setPotionCount(potionCount - 1)
-      // alert('PIKACHU healed for 20 HP')
+      setPotionCount(potionCount - 1)      
       setCombatText('PIKACHU healed for 20 HP')
       await timeout(2000)
       setCombatText(' ')
@@ -186,8 +180,7 @@ function CatchPokemon({user}) {
       setCatchCountdown('0')
       await timeout(1000)
       setCatchCountdown(null)
-      await timeout(1000)
-      // alert(`${enemyExists.name.toUpperCase()} broke free!`)
+      await timeout(1000)      
       setCombatText(`${enemyExists.name.toUpperCase()} broke free!`)
       await timeout(1000)
       setCombatText(' ')
