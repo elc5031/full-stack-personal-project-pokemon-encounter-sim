@@ -11,7 +11,7 @@ import CatchPokemon from './pages/CatchPokemon';
 
 function App() {
   const [user, setUser]= useState(null)
-  const [myPokemon, setMyPokemon] = useState([])
+  const [myPokemon, setMyPokemon] = useState("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/25.png")
 
   // handle cookies
   function getCookie(name) {
@@ -41,17 +41,15 @@ function App() {
 
   // starter pokemon as pikachu
   const firstPoke = async() => {
-    let currentPokes = myPokemon
-    const pikachuInfo = await axios.get('https://pokeapi.co/api/v2/pokemon/pikachu')
-    
-    currentPokes.push(pikachuInfo)
-    setMyPokemon(currentPokes)
+    let pikachuInfo = await axios.get('https://pokeapi.co/api/v2/pokemon/pikachu')
+    pikachuInfo = pikachuInfo.data    
+    setMyPokemon(pikachuInfo)
     
 
     let myResponse = await axios.post('addPoke/', {
-      'name': pikachuInfo.data.name,
-      'poke_id': pikachuInfo.data.id,
-      'img_link': pikachuInfo.data.sprites.other['official-artwork'].front_default,
+      'name': pikachuInfo.name,
+      'poke_id': pikachuInfo.id,
+      'img_link': pikachuInfo.sprites.other['official-artwork'].front_default,
     })
     if(myResponse.data['addpoke']==true){
       console.log('poke added to db')
@@ -80,8 +78,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LogIn />} />
           <Route path="/signUp2" element={<SignUp2 />} />
-          <Route path="/MyPokemon" element={<MyPokemon user = {user} myPokemon = {myPokemon}/>} />
-          <Route path="/CatchPokemon" element={<CatchPokemon user = {user}/>} />
+          <Route path="/MyPokemon" element={<MyPokemon user = {user} myPokemon = {myPokemon} setMyPokemon = {setMyPokemon}/>} />
+          <Route path="/CatchPokemon" element={<CatchPokemon user = {user} myPokemon = {myPokemon}/>} />
         </Routes>
       </Router>
       

@@ -14,7 +14,7 @@ import MyPokeNamePlate from '../components/MyPokeNamePlate';
 import EnemyPokeNamePlate from '../components/EnemyPokeNamePlate';
 import EnemyPokeCard from '../components/EnemyPokeCard';
 
-function CatchPokemon({user}) {
+function CatchPokemon({user, myPokemon}) {
   const [myPokemonHP, setMyPokemonHP] = useState(100)
   const [enemyPokemonHP, setEnemyPokemonHP] = useState(100)
   const [potionCount, setPotionCount] = useState(3)
@@ -80,7 +80,7 @@ function CatchPokemon({user}) {
     let myDam = randIntIntervals(5, 20)
     enemyHP -= myDam
     setEnemyPokemonHP(enemyHP)    
-    setCombatText('PIKACHU attacked for ' + myDam + ' damage')
+    setCombatText(myPokemon.name.toUpperCase() + ' attacked for ' + myDam + ' damage')
     await timeout(2000)
     setCombatText(' ')
 
@@ -101,21 +101,21 @@ function CatchPokemon({user}) {
       playerHP += 20
       setMyPokemonHP(playerHP)
       setPotionCount(potionCount - 1)      
-      setCombatText('PIKACHU healed for 20 HP')
+      setCombatText(`${myPokemon.name.toUpperCase()} healed for 20 HP`)
       await timeout(2000)
       setCombatText(' ')
       await timeout(1000)
       enemyAttack(playerHP)
     }
     else if (potionCount === 0){
-      alert('PIKACHU tried to heal, but you have no more potions!')
+      alert(`${myPokemon.name.toUpperCase()} tried to heal, but you have no more potions!`)
       enemyAttack(playerHP)
     }
     else {
       playerHP = 100
       setMyPokemonHP(playerHP)
       setPotionCount(potionCount - 1)      
-      setCombatText('PIKACHU healed for 20 HP')
+      setCombatText(`${myPokemon.name.toUpperCase()} healed for 20 HP`)
       await timeout(2000)
       setCombatText(' ')
       await timeout(1000)
@@ -196,7 +196,7 @@ function CatchPokemon({user}) {
     if (playerHP <= 0) {
       setMyPokemonHP(0)
       await timeout(1000)
-      alert('Your PIKACHU has fainted! You run away!')
+      alert(`Your ${myPokemon.name.toUpperCase()} has fainted! You run away!`)
       window.location.href="#/MyPokemon"
     }
     else if (enemyHP <= 0) {
@@ -236,11 +236,11 @@ function CatchPokemon({user}) {
           </Col>
 
           <Col>
-            <MyPokeCard />
+            <MyPokeCard myPokemon = {myPokemon}/>
           </Col>
 
           <Col>
-            <MyPokeNamePlate myPokemonHP = {myPokemonHP} />
+            <MyPokeNamePlate myPokemonHP = {myPokemonHP} myPokemon = {myPokemon}/>
           </Col>
         
       </Row>

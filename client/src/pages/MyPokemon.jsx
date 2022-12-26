@@ -9,7 +9,7 @@ import PokemonArt from '../components/PokemonArt';
 
 
 
-function MyPokemon({user, myPokemon}) {
+function MyPokemon({user, myPokemon, setMyPokemon}) {
   const [allPokemon, setAllPokemon] = useState([])
   const [pokeDeleted, setPokeDeleted] = useState(false)
 
@@ -19,6 +19,9 @@ function MyPokemon({user, myPokemon}) {
     console.log(myResponse.data.data)
     setAllPokemon(myResponse.data.data)    
   }
+
+  const setMyPoke = (input) => {setMyPokemon(input)}
+  
   
   useEffect(() => {
     showMyPokemon()
@@ -38,7 +41,7 @@ function MyPokemon({user, myPokemon}) {
           {allPokemon.map((pokemon) => {
               return (
                 <Col className='d-flex'>
-                <PokemonArt key={pokemon.id} {...pokemon} setPokeDeleted = {setPokeDeleted}/>
+                <PokemonArt key={pokemon.id} {...pokemon} setPokeDeleted = {setPokeDeleted} setMyPokemon = {setMyPoke} myPokemon = {myPokemon}/>
                 </Col>
               )
                             
